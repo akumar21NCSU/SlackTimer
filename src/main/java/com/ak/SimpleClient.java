@@ -1,17 +1,20 @@
 package com.ak;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
 
 
 public class SimpleClient {
 
     private final static String baseUrl = "https://slack.com/api/";
 
-    private final static String tokenString = "token=xoxp-9882188917-11255268752-73847080256-460cb6fc14";
+    private final static String tokenString = "token=";
 
     private final static String usersListString = "users.list?";
 
@@ -47,6 +50,21 @@ public class SimpleClient {
             System.out.println("Output from Server .... \n");
             System.out.println(output);
 
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(output);
+
+            JsonNode members = node.get("members");
+
+            System.out.println(members.size());
+
+            List<String> ids = members.findValuesAsText("id");
+            List<String> names = members.findValuesAsText("name");
+
+            for(String id: ids)
+                System.out.println(id);
+
+            for(String name: names)
+                System.out.println(name);
 
         } catch (Exception e) {
 

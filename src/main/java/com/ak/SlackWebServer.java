@@ -6,6 +6,8 @@ import java.net.InetSocketAddress;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -51,6 +53,14 @@ public class SlackWebServer {
                 message = ". Invalid message: " + text + ". Please follow this format: /timedmessage <reciever> <time_in_minutes> <message>";
             } else {
                 message = ". Your message has been saved. It will be delivered at --" + sender;
+                String[] parts = text.split("\\++");
+                int minutes = Integer.parseInt(parts[1]);
+                MessageService ms = new MessageService();
+                Date now = new Date();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(now);
+                cal.add(Calendar.MINUTE, minutes);
+                ms.insertMessage(sender, parts[0], parts[2], Message.formatDate(cal.getTime()));
             }
 
             String response = "{\"text\": \"Hi " + sender + message + "\"}";

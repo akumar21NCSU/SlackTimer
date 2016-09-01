@@ -42,7 +42,7 @@ public class MessageService {
             //Execute query
             System.out.println("Creating statement...");
             String sql;
-            sql = "insert into requests(sender, reciever, message, delivery_time) values('"+sender+"','"+receiver+"','"+message+"','"+time+"')";
+            sql = "insert into requests(sender, receiver, message, delivery_time) values('"+sender+"','"+receiver+"','"+message+"','"+time+"')";
             stmt = conn.createStatement();
 
             stmt.executeUpdate(sql);

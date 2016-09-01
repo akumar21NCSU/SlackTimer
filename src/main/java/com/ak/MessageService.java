@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MessageRetriever {
+public class MessageService {
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost/slack_requests";
@@ -86,7 +86,7 @@ public class MessageRetriever {
 
     public static void main(String[] args) {
 
-        MessageRetriever ex = new MessageRetriever();
+        MessageService ex = new MessageService();
         java.util.Date now = new java.util.Date();
         List<Message> result = ex.getMessages(Message.formatDate(now));
         //System.out.println("message "+ result.get(0).getMessage());

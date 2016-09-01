@@ -11,7 +11,7 @@ public class ScheduledTask extends TimerTask {
 
     private Date now;
 
-    private static final MessageRetriever retriever = new MessageRetriever();
+    private static final MessageService retriever = new MessageService();
 
     public void run(){
 

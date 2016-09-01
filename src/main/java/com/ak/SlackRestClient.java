@@ -10,11 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 
-public class SimpleClient {
+public class SlackRestClient {
 
     private final static String baseUrl = "https://slack.com/api/";
 
-    private final static String tokenString = "token=";
+    private final static String tokenString = "token=xoxp-9882188917-11255268752-74159875686-f0e146f158";
 
     private final static String usersListString = "users.list?";
 
@@ -26,9 +26,6 @@ public class SimpleClient {
         try {
 
             Client client = Client.create();
-            /*ClientConfig clientConfig = new DefaultClientConfig();
-            clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-            Client client = Client.create(clientConfig);*/
 
             String urlString = baseUrl + usersListString + tokenString + presenceString + prettyString;
             System.out.println(urlString);
@@ -47,9 +44,6 @@ public class SimpleClient {
 
             String output = (String)response.getEntity(String.class);
 
-            System.out.println("Output from Server .... \n");
-            System.out.println(output);
-
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(output);
 
@@ -60,11 +54,15 @@ public class SimpleClient {
             List<String> ids = members.findValuesAsText("id");
             List<String> names = members.findValuesAsText("name");
 
-            for(String id: ids)
+            /*for(String id: ids)
                 System.out.println(id);
 
             for(String name: names)
-                System.out.println(name);
+                System.out.println(name);*/
+
+
+
+
 
         } catch (Exception e) {
 

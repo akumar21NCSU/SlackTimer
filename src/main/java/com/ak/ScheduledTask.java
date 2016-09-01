@@ -20,7 +20,7 @@ public class ScheduledTask extends TimerTask {
         SlackRestClient client = new SlackRestClient();
         try {
             for (Message msg : messages) {
-                client.sendMess age(msg.getSender(), msg.getReceiver(), msg.getMessage());
+                client.sendMessage(msg.getSender(), msg.getReceiver(), msg.getMessage());
             }
         }catch(Exception e){
             System.out.println("Error Sending message. "+ e.getMessage());

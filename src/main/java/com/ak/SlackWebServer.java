@@ -23,6 +23,15 @@ public class SlackWebServer {
         server.start();
     }
 
+    private static String joinMessage(String[] parts){
+
+        String result = "";
+        for(int i=2;i< parts.length;i++)
+            result = result + parts[i]+"%20";
+
+        return result;
+    }
+
 
     static class MyHandler implements HttpHandler {
 
@@ -60,7 +69,7 @@ public class SlackWebServer {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(now);
                 cal.add(Calendar.MINUTE, minutes);
-                ms.insertMessage(sender, parts[0], parts[2], Message.formatDate(cal.getTime()));
+                ms.insertMessage(sender, parts[0], joinMessage(parts), Message.formatDate(cal.getTime()));
             }
 
             String response = "{\"text\": \"Hi " + sender + message + "\"}";
@@ -85,7 +94,7 @@ public class SlackWebServer {
         static private boolean validateText(String text) {
             //text = text.replace("+", " ");
             String[] parts = text.split("\\++");
-            if (parts.length != 3)
+            if (parts.length < 3)
                 return false;
 
             return validateTime(parts[1]) && validateRecepient(parts[0]);

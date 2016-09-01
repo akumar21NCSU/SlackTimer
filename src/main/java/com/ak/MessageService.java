@@ -7,7 +7,7 @@ import java.util.List;
 public class MessageService {
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/slack_requests";
+    private static final String DB_URL = "jdbc:mysql://localhost/slack";
 
     //  Database credentials
     private static final String USER = "root";
@@ -26,7 +26,8 @@ public class MessageService {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
         } catch (Exception e) {
-            System.out.println("Exception in establishing Connection");
+            System.out.println("Exception in making a Connection" + e.getMessage());
+            e.printStackTrace();
         }
         return conn;
     }
@@ -35,12 +36,11 @@ public class MessageService {
 
         Statement stmt = null;
         Connection conn = null;
+        System.out.println("Log: Inside Insert message");
 
         try {
 
             conn = makeConnection();
-            //Execute query
-            System.out.println("Creating statement...");
             String sql;
             sql = "insert into requests(sender, receiver, message, delivery_time) values('"+sender+"','"+receiver+"','"+message+"','"+time+"')";
             stmt = conn.createStatement();
@@ -50,6 +50,7 @@ public class MessageService {
             //Clean-up environment
             stmt.close();
             conn.close();
+            System.out.println("Log: Exiting Insert message");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -79,13 +80,13 @@ public class MessageService {
         List<Message> messages = new LinkedList<Message>();
         Statement stmt = null;
         Connection conn = null;
+        System.out.println("Log: Inside Get message");
 
         try {
 
 
             conn = makeConnection();
-            //Execute query
-            System.out.println("Creating statement...");
+
             String sql;
             sql = "SELECT * FROM requests where delivery_time ='" + compareDate + "'";
             stmt = conn.createStatement();
@@ -96,10 +97,10 @@ public class MessageService {
             //Extract data from result set
             while (rs.next()) {
                 //Retrieve by column name
-                System.out.print("hererere");
+                System.out.print("Found a message to send ...");
                 int id = rs.getInt("id");
                 String sender = rs.getString("sender");
-                String reciever = rs.getString("reciever");
+                String reciever = rs.getString("receiver");
                 String message = rs.getString("message");
 
                 String time = rs.getString("delivery_time");
@@ -118,6 +119,7 @@ public class MessageService {
             rs.close();
             stmt.close();
             conn.close();
+            System.out.println("Log: Exiting Get message");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();

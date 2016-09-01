@@ -15,7 +15,7 @@ public class SlackRestClient {
 
     private final static String baseUrl = "https://slack.com/api/";
 
-    private final static String tokenString = "token=";
+    private final static String tokenString = "token=xoxp-9882188917-11255268752-74159875686-f0e146f158";
 
     private final static String usersListString = "users.list?";
 

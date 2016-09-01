@@ -11,12 +11,19 @@ public class ScheduledTask extends TimerTask {
 
     private Date now;
 
-    private static final MessageService retriever = new MessageService();
+    private static final MessageService service = new MessageService();
 
     public void run(){
 
         now = new Date();
-        List<Message> messages = retriever.getMessages(Message.formatDate(now));
-
+        List<Message> messages = service.getMessages(Message.formatDate(now));
+        SlackRestClient client = new SlackRestClient();
+        try {
+            for (Message msg : messages) {
+                client.sendMess age(msg.getSender(), msg.getReceiver(), msg.getMessage());
+            }
+        }catch(Exception e){
+            System.out.println("Error Sending message. "+ e.getMessage());
+        }
     }
 }

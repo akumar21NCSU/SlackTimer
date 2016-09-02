@@ -1,7 +1,7 @@
 # SlackTimer
 A custom integration feature of slack. It allows users to send timed messages to their teammates. 
 Usage syntax:
-/timer <recipient> <time_in_minutes> <message_text>
+/timer [recipient] [time_in_minutes] [message_text]
 
 For example, /timer tim 50 Ping me when meeting gets over.
 

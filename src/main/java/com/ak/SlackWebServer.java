@@ -61,8 +61,8 @@ public class SlackWebServer {
             if (!valid) {
                 message = ". Invalid message: " + text + ". Please follow this format: /timedmessage <reciever> <time_in_minutes> <message>";
             } else {
-                message = ". Your message has been saved. It will be delivered at --" + sender;
                 String[] parts = text.split("\\++");
+                message = ". Your message has been saved. It will be delivered to " + parts[0] +" at your specified time.";
                 int minutes = Integer.parseInt(parts[1]);
                 MessageService ms = new MessageService();
                 Date now = new Date();
